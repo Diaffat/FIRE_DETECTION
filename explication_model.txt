@@ -1,0 +1,44 @@
+La détection d'objets dans une image ou une vidéo est une tâche non triviale en vision par ordinateur, 
+car deux critères sont à prendre en compte lors de la construction d'une méthode de détections d'objet. 
+Le premier est la capacité que cette méthode détecte correctement un objet et à ne pas se tromper .
+La seconde est le temps d'exécution que cette méthode nécessite. 
+En ce sens, la méthode des cascades de Haar respecte ces deux critères.
+
+L'algorithme se décompose en 4 parties :
+
+   -Constitution d'une base de données contenant des images avec l'objet et des images sans l'objet.
+
+   -Extraction de caractéristiques de l'ensemble des images contenu dans la base
+
+    -Entraînement d'un classifieur en cascade 
+
+    -Phase de détection
+
+
+#        Constitution du Jeu de données
+Pour pouvoir utiliser les cascades de Haar, il faut dans un premier temps constituer un jeu de données 
+composé d'images contenant uniquement et ne contenant pas l'image de l'objet que vous souhaitez détecter.
+Les recommandations vous construisez ce jeu reste bien entendu les mêmes que pour toute application de reconnaissance d'image : 
+
+Les images doivent être proches visuellement de ce que vous souhaitez détecter(DANS NOTRE CAS DES IMAGES DE FEU)
+
+Il faut une certaine quantité d'exemples non négligeable 
+
+
+#      Extraction des caractéristiques de l'objet
+
+Les cascades de Haar créent les caractéristiques qu'il utilise en appliquant sur l'image un filtre carré de 24x24.
+Il s'agit de 4 filtres.
+Les caractéristiques sont obtenues en soustrayant la somme des pixels de l'image 
+couverts par la zone blanche du filtre à la somme des pixels couverts par la zone bleue. 
+Ce processus génère énormément de caractéristiques étant donné que le filtre est appliqué sur toute l'image.
+
+#         Entraînement du classifieur
+Entraînement  avec Adaboost
+
+#         La phase de détection
+
+Une fois entraînés, nous pouvons passer à la phase de détection. 
+
+Seulement comme ce processus de calcule prends énormément de temps des images intégrales sont calculée 
+afin d'accélérer le temps de calcul.
