@@ -2,14 +2,32 @@
 <html>
   <head>
     <title>Video Streaming</title>
+    <style>
+      h1 {
+        color: rgb(107, 76, 19);font-family: verdana;font-size: 200%;}
+      label{
+        color: rgb(151, 124, 34);font-family: Georgia, 'Times New Roman', Times, serif;font-size: 160%;}
+      input{
+        color: rgb(73, 43, 6);font-family: courier;font-size: 160%;
+      }
+      div{
+        margin: 200;
+        align-content: center;
+      }
+      </style>
   </head>
 
   <body>
     <h1>Live fire detection streaming (SST PROJECT)</h1><br>
+    <form action = "" method = "get">
+      <label for="IP"margin: 10;padding: 10;>Please enter IP</label><br>
+      <input type="text" id="IP" name="IP">
+      <input type="submit" value="Start">
+      <input type="submit" value="Close">
+    </form>
     <div>
        <br> <img src="{{ url_for('video_feed') }}" width="45%"/>
-    </div>
-            
+    </div>           
   </body>
 
 

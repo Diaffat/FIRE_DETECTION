@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, stream_with_context
+from flask import Flask, render_template, Response, stream_with_context, url_for, request
 import cv2         # Library for openCV
 import threading   # Library for threading -- which allows code to run in backend
 import playsound   # Library for alarm sound
@@ -12,13 +12,16 @@ import os
 app = Flask(__name__)
 # To access xml file which includes positive and negative images of fire. (Trained images)
 fire_cascade = cv2.CascadeClassifier('fire_detection_cascade_model.xml')
-# File is also provided with the code.
-video = cv2.VideoCapture(0)
 
 
 # To start camera this command is used "0" for laptop inbuilt camera and "1" for USB attahed camera for pc
 runOnce = False  # created boolean
 
+def SendIp(request):
+   ip=request.POST
+   return ip
+ 
+video = cv2.VideoCapture(0)
 
 def play_alarm_sound_function():  # defined function to play alarm post fire detection using threading
     # to play alarm # mp3 audio file is also provided with the code.
@@ -40,7 +43,7 @@ def send_mail_function():  # defined function to send mail post fire detection u
         server.starttls()
         msg = MIMEMultipart()
         text = MIMEText(
-            "Fire signalisation: Warning fire accident has been reported")
+            "Fire signalisation !!!")
         msg.attach(text)
         image = MIMEImage(img, name=os.path.basename(filename))
         msg.attach(image)
@@ -61,7 +64,7 @@ def gen(video):
     global outputFrame, lock
     while(True):
         Alarm_Status = False
-        ret, frame = video.read()  # Value in ret is True # To read video frame
+        ret, frame =video.read()  # Value in ret is True # To read video frame
         if not ret:
             break
         else:
@@ -103,12 +106,12 @@ def gen(video):
             break
     video.release()
     cv2.destroyAllWindows()
-
+def close(video):
+    video.release() 
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/video_feed/')
 def video_feed():
